@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers import chat, auth
+from app.routers import chat, auth, history, admin, dev
 from app import models, database
 
 
@@ -8,6 +8,9 @@ app = FastAPI(title="Chatbot API with Auth")
 # include routers
 app.include_router(chat.router)
 app.include_router(auth.router)
+app.include_router(history.router)
+app.include_router(admin.router)
+app.include_router(dev.router)
 
 # create DB tables
 models.Base.metadata.create_all(bind=database.engine)
