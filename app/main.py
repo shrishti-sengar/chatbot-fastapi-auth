@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()  # loads .env into environment
 from fastapi import FastAPI
 from app.routers import chat, auth, history, admin, dev
 from app import models, database

@@ -4,11 +4,11 @@ from passlib.context import CryptContext
 from app import models, database, schemas
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
+import os
 
+SECRET_KEY = os.getenv("SECRET_KEY")
 router = APIRouter(prefix="/auth", tags=["auth"])
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-SECRET_KEY = "supersecretkey"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
