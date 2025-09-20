@@ -14,9 +14,6 @@ app.include_router(history.router)
 app.include_router(admin.router)
 app.include_router(dev.router)
 
-# create DB tables
-models.Base.metadata.create_all(bind=database.engine)
-
 
 @app.get("/hello")
 def hello():

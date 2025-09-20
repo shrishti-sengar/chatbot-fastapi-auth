@@ -1,11 +1,10 @@
-# app/routers/chat.py
 from fastapi import APIRouter, Depends, BackgroundTasks
 from sqlalchemy.orm import Session
 from uuid import uuid4
 from app.schemas import MessageRequest, MessageResponse
-from app.core.auth import get_current_user, get_db
+from app.core.auth import get_current_user
 from app.core.s3_client import upload_session_to_s3
-from app import models
+from app import models, database
 from app.core.openai_client import get_ai_reply
 
 router = APIRouter(prefix="/chat", tags=["chat"])
@@ -15,7 +14,7 @@ router = APIRouter(prefix="/chat", tags=["chat"])
 async def chat(request: MessageRequest,
                background_tasks: BackgroundTasks,
                current_user: models.User = Depends(get_current_user),
-               db: Session = Depends(get_db)):
+               db: Session = Depends(database.get_db)):
 
     session_id = request.session_id or uuid4().hex
     existing = db.query(models.Session).filter(models.Session.id == session_id).first()
