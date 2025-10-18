@@ -3,7 +3,6 @@ import os
 import logging
 from botocore.exceptions import BotoCoreError, ClientError
 import boto3
-from datetime import datetime
 
 logger = logging.getLogger("s3_client")
 

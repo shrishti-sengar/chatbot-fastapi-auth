@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, BackgroundTasks
 from sqlalchemy.orm import Session
 from uuid import uuid4
-from app.schemas.message_schema import MessageRequest, MessageResponse
+from app.schemas.message import MessageRequest, MessageResponse
 from app.core.auth import get_current_user
 from app.core.s3_client import upload_session_to_s3
 from app import database
@@ -20,9 +20,9 @@ async def chat(request: MessageRequest,
                db: Session = Depends(database.get_db)):
 
     session_id = request.session_id or uuid4().hex
-    existing = db.query(models.session.Session).filter(models.session.Session.id == session_id).first()
+    existing = db.query(models.chatsession.ChatSession).filter(models.chatsession.ChatSession.id == session_id).first()
     if not existing:
-        new_session = models.session.Session(id=session_id, user_id=current_user.id)
+        new_session = models.chatsession.ChatSession(id=session_id, user_id=current_user.id)
         db.add(new_session)
         db.commit()
         db.refresh(new_session)

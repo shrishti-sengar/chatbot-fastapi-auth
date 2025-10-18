@@ -10,5 +10,5 @@ class User(Base):
     password = Column(String)
     role = Column(String, default="user")
 
-    sessions = relationship("Session", back_populates="user")
+    sessions = relationship("ChatSession", back_populates="user")
     messages = relationship("Message", back_populates="user")
